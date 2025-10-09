@@ -10,7 +10,7 @@ import profileData from "@/data/profile.json";
 const navLinks = [
   { name: "Home", href: "/" },
   { name: "About", href: "/about" },
-  { name: "Portfolio", href: "/portfolio" },
+  { name: "Projects", href: "/projects" },
   { name: "Services", href: "/services" },
   { name: "Updates", href: "/updates" },
 ];
@@ -53,7 +53,9 @@ export default function NavBar() {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/90 backdrop-blur-md shadow-sm" : "bg-transparent"
+        scrolled
+          ? "bg-background/90 backdrop-blur-md shadow-sm"
+          : "bg-transparent"
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
