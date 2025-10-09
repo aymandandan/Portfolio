@@ -75,8 +75,8 @@ export default function NavBar() {
                 href={link.href}
                 className={`px-4 py-2 text-sm font-medium transition-colors rounded-md ${
                   pathname === link.href
-                    ? "text-primary-600 bg-primary-50"
-                    : "text-gray-700 hover:text-primary-600 hover:bg-gray-50"
+                    ? "text-primary-500 bg-primary-50"
+                    : "text-gray-500 hover:text-primary-500 hover:bg-gray-100"
                 }`}
               >
                 {link.name}
@@ -91,11 +91,13 @@ export default function NavBar() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="md:hidden z-50">
             <button
               onClick={toggleMenu}
-              className="p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              className="p-2 rounded-md text-gray-700 hover:text-primary-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 transition-colors"
               aria-label={isOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               {isOpen ? (
                 <XMarkIcon className="h-6 w-6" aria-hidden="true" />
@@ -115,10 +117,10 @@ export default function NavBar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "tween", ease: "easeInOut" }}
-            className="fixed inset-0 h-screen w-full bg-white z-40 md:hidden"
+            className="fixed inset-0 h-screen w-full bg-white/80 z-40 md:hidden"
           >
-            <div className="flex flex-col h-full p-6 space-y-4">
-              <div className="flex justify-between items-center mb-8">
+            <div className="flex flex-col h-full p-6 space-y-4 pt-20">
+              <div className="mb-8">
                 <Link
                   href="/"
                   className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
@@ -126,13 +128,6 @@ export default function NavBar() {
                 >
                   {profileData.personalInfo.name.split(" ")[0]}
                 </Link>
-                <button
-                  onClick={toggleMenu}
-                  className="p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none"
-                  aria-label="Close menu"
-                >
-                  <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
               </div>
 
               <nav className="flex-1 space-y-2">
