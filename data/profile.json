@@ -1,0 +1,64 @@
+{
+  "personalInfo": {
+    "name": "Ayman Dandan",
+    "role": "Software Engineer & Web Developer",
+    "bio": "I build exceptional digital experiences with clean, efficient code and thoughtful design.",
+    "email": "ayman@example.com",
+    "location": "Your Location",
+    "avatar": "/images/profile.jpg"
+  },
+  "socialLinks": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/aymandandan",
+      "icon": "github"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://linkedin.com/in/aymandandan",
+      "icon": "linkedin"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Frontend",
+      "items": ["HTML5", "CSS3", "JavaScript", "TypeScript", "React", "Next.js"]
+    },
+    {
+      "category": "Backend",
+      "items": ["Node.js", "Express", "Python", "Django", "SQL", "MongoDB"]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Project Name",
+      "description": "Brief project description",
+      "image": "/images/projects/project1.jpg",
+      "tags": ["React", "Node.js", "MongoDB"],
+      "github": "https://github.com/yourusername/project1",
+      "demo": "https://project1-demo.com"
+    }
+  ],
+  "services": [
+    {
+      "title": "Web Development",
+      "description": "Custom web applications built with modern technologies",
+      "icon": "code"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Software Engineer",
+      "company": "Company Name",
+      "period": "2020 - Present",
+      "description": "Responsibilities and achievements..."
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "institution": "University Name",
+      "period": "2016 - 2020"
+    }
+  ]
+}
