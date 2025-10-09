@@ -4,7 +4,7 @@
     "role": "Software Engineer & Web Developer",
     "bio": "I build exceptional digital experiences with clean, efficient code and thoughtful design.",
     "email": "ayman@example.com",
-    "location": "San Francisco, CA",
+    "location": "Saida, Lebanon",
     "avatar": "/images/Profile.jpg",
     "availability": "Freelance & Full-time",
     "about": {
@@ -49,7 +49,11 @@
   ],
   "contact": {
     "email": "ayman@example.com",
-    "location": "San Francisco, CA"
+    "location": "Saida, Lebanon",
+    "coordinates": {
+      "lat": 33.5574477,
+      "lng": 35.3718607
+    }
   },
   "projects": [
     {
