@@ -8,7 +8,7 @@ import {
   FaShoppingCart,
   FaWrench,
 } from "react-icons/fa";
-import profile from "@/data/profile.json";
+import { profileData } from "@/data/profile";
 import Link from "next/link";
 import { AnimatedServiceCard } from "@/components/services/AnimatedServiceCard";
 import { ServicesHero } from "@/components/services/ServicesHero";
@@ -23,7 +23,7 @@ const iconMap = {
 };
 
 // Get services from profile data
-const services = profile.services.map((service) => ({
+const services = profileData.services.map((service) => ({
   ...service,
   id: service.title.toLowerCase().replace(/\s+/g, "-"),
   cta: `Get ${service.title}`,

@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import profileData from "@/data/profile.json";
+import { profileData } from "@/data/profile";
 
 export default function Home() {
-  const { personalInfo, socialLinks } = profileData;
+  const { name, role, bio, avatar, contact } = profileData;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -24,13 +24,13 @@ export default function Home() {
                 id="hero-heading" 
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
               >
-                {personalInfo.name}
+                {name}
               </h1>
               <h2 className="text-2xl md:text-3xl text-primary-300 mb-6">
-                {personalInfo.role}
+                {role}
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-8 max-w-2xl">
-                {personalInfo.bio}
+                {bio}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <Button href="#projects" variant="primary">
@@ -44,8 +44,8 @@ export default function Home() {
             <div className="lg:w-1/2 flex justify-center mt-12 lg:mt-0">
               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary-500 shadow-lg">
                 <Image
-                  src={personalInfo.avatar}
-                  alt={personalInfo.name}
+                  src={avatar}
+                  alt={name}
                   fill
                   className="object-cover"
                   priority
@@ -56,7 +56,7 @@ export default function Home() {
           
           {/* Social Links */}
           <div className="flex justify-center lg:justify-start mt-12 gap-6">
-            {socialLinks.map((social) => (
+            {contact.socialLinks?.map((social) => (
               <a
                 key={social.name}
                 href={social.url}
@@ -65,7 +65,7 @@ export default function Home() {
                 className="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors text-3xl"
                 aria-label={social.name}
               >
-                {social.icon === 'github' ? (
+                {social.name.toLowerCase() === 'github' ? (
                   <FaGithub aria-hidden="true" />
                 ) : (
                   <FaLinkedin aria-hidden="true" />

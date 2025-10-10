@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import profileData from "@/data/profile.json";
+import { profileData } from "@/data/profile";
 
 const navLinks = [
   { name: "Home", href: "/" },
@@ -66,7 +66,7 @@ export default function NavBar() {
             className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
             aria-label="Home"
           >
-            {profileData.personalInfo.name.split(" ")[0]}
+            {profileData.name.split(" ")[0]}
           </Link>
 
           {/* Desktop Navigation */}
@@ -128,7 +128,7 @@ export default function NavBar() {
                   className="text-2xl font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent"
                   onClick={() => setIsOpen(false)}
                 >
-                  {profileData.personalInfo.name.split(" ")[0]}
+                  {profileData.name.split(" ")[0]}
                 </Link>
               </div>
 

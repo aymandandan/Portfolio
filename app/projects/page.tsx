@@ -10,7 +10,7 @@ import {
   FiLayers,
   FiSmartphone,
 } from "react-icons/fi";
-import profile from "@/data/profile.json";
+import { profileData } from "@/data/profile";
 
 type FilterType = "all" | "web" | "design" | "mobile";
 
@@ -26,8 +26,8 @@ export default function ProjectsPage() {
 
   const filteredProjects =
     activeFilter === "all"
-      ? profile.projects
-      : profile.projects.filter((project) => project.category === activeFilter);
+      ? profileData.projects
+      : profileData.projects.filter((project) => project.category === activeFilter);
 
   const container = {
     hidden: { opacity: 0 },

@@ -1,9 +1,8 @@
 import Image from 'next/image';
-import profile from '@/data/profile.json';
+import { profileData } from '@/data/profile';
 
 export default function AboutPage() {
-  const { personalInfo, skills } = profile;
-  const { about } = personalInfo;
+  const { name, role, about, skills, email, avatar, availability, contact } = profileData;
 
   return (
     <main className="min-h-screen">
@@ -32,8 +31,8 @@ export default function AboutPage() {
             <div className="md:w-1/3">
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src="/images/Profile.jpg"
-                  alt={personalInfo.name}
+                  src={avatar}
+                  alt={name}
                   width={400}
                   height={500}
                   className="w-full h-auto"
@@ -44,46 +43,43 @@ export default function AboutPage() {
             <div className="md:w-2/3">
               <div className="mb-6">
                 <h2 className="text-3xl font-bold">
-                  Hello, I&apos;m {personalInfo.name}
+                  Hello, I&apos;m {name}
                 </h2>
                 <h3 className="text-xl text-primary-600 dark:text-primary-400">
-                  {personalInfo.role}
+                  {role}
                 </h3>
               </div>
-              
-              <div className="space-y-4 text-gray-700 dark:text-gray-300">
-                <p>
-                  {about.intro}
-                </p>
-                <p>
-                  {about.story}
-                </p>
-              </div>
+              <p className="text-gray-700 dark:text-gray-300 mb-4">
+                {about.intro}
+              </p>
+              <p className="text-gray-700 dark:text-gray-300">
+                {about.story}
+              </p>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-8">
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Name:</h4>
-                  <p className="text-gray-600 dark:text-gray-400">{personalInfo.name}</p>
+                  <p className="text-gray-600 dark:text-gray-400">{name}</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Email:</h4>
-                  <a href={`mailto:${personalInfo.email}`} className="text-primary-600 dark:text-primary-400 hover:underline">
-                    {personalInfo.email}
+                  <a href={`mailto:${email}`} className="text-primary-600 dark:text-primary-400 hover:underline">
+                    {email}
                   </a>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">From:</h4>
-                  <p className="text-gray-600 dark:text-gray-400">{personalInfo.location}</p>
+                  <p className="text-gray-600 dark:text-gray-400">{contact.location}</p>
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Available for:</h4>
-                  <p className="text-gray-600 dark:text-gray-400">{personalInfo.availability}</p>
+                  <p className="text-gray-600 dark:text-gray-400">{availability}</p>
                 </div>
               </div>
 
               <div className="flex flex-wrap gap-4 mt-8">
                 <a 
-                  href={personalInfo.about.cvUrl} 
+                  href={about.cvUrl} 
                   className="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
                   download
                 >

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import UpdateCard from "@/components/updates/UpdateCard";
-import profileData from "@/data/profile.json";
+import { profileData } from "@/data/profile";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -18,8 +18,9 @@ export const metadata: Metadata = {
     "Stay updated with my latest work, thoughts, and experiences in web development.",
 };
 
-export default function UpdatesPage({ searchParams }: SearchParams) {
-  const currentPage = Math.max(1, parseInt(searchParams.page || "1", 10));
+export default async function UpdatesPage({ searchParams }: SearchParams) {
+  const {page} = await searchParams;
+  const currentPage = Math.max(1, parseInt(page || "1", 10));
   const updates = profileData.updates || [];
   const totalPages = Math.ceil(updates.length / ITEMS_PER_PAGE);
 

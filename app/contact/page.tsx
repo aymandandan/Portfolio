@@ -6,7 +6,7 @@ import {
   PhoneIcon,
   MapPinIcon,
 } from "@heroicons/react/24/outline";
-import profile from "@/data/profile.json";
+import { profileData } from "@/data/profile";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -64,10 +64,10 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-medium text-foreground">Email</h3>
                 <a
-                  href={`mailto:${profile.contact.email}`}
+                  href={`mailto:${profileData.email}`}
                   className="text-primary-600 dark:text-primary-400 hover:underline"
                 >
-                  {profile.contact.email}
+                  {profileData.email}
                 </a>
               </div>
             </div>
@@ -80,10 +80,10 @@ export default function ContactPage() {
               <div>
                 <h3 className="font-medium text-foreground">Phone</h3>
                 <a
-                  href="tel:+1234567890"
+                  href={`tel:${profileData.contact.phone}`}
                   className="text-primary-600 dark:text-primary-400 hover:underline"
                 >
-                  +1 (234) 567-890
+                  {profileData.contact.phone}
                 </a>
               </div>
             </div>
@@ -95,7 +95,9 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 className="font-medium text-foreground">Location</h3>
-                <p className="text-foreground/80">{profile.contact.location}</p>
+                <p className="text-foreground/80">
+                  {profileData.contact.location}
+                </p>
               </div>
             </div>
           </div>
@@ -195,18 +197,20 @@ export default function ContactPage() {
       {/* Map Section */}
       <section className="mt-20">
         <div className="text-center mb-8">
-          <h2 className="text-3xl font-bold text-foreground">Find Me On The Map</h2>
+          <h2 className="text-3xl font-bold text-foreground">
+            Find Me On The Map
+          </h2>
         </div>
         <div className="rounded-xl overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700">
           <iframe
-            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26762.0219851801!2d${profile.contact.coordinates.lng}!3d${profile.contact.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ef2d8d358291d%3A0x3f4eaaf521ef9c5!2sSidon%2C%20Lebanon!5e0!3m2!1sen!2slb!4v1620000000000!5m2!1sen!2slb`}
+            src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26762.0219851801!2d${profileData.contact.coordinates.lng}!3d${profileData.contact.coordinates.lat}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151ef2d8d358291d%3A0x3f4eaaf521ef9c5!2sSidon%2C%20Lebanon!5e0!3m2!1sen!2slb!4v1620000000000!5m2!1sen!2slb`}
             width="100%"
             height="450"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
-            title={`Location Map - ${profile.contact.location}`}
-            aria-label={`Interactive map showing my location in ${profile.contact.location}`}
+            title={`Location Map - ${profileData.contact.location}`}
+            aria-label={`Interactive map showing my location in ${profileData.contact.location}`}
             className="w-full"
           ></iframe>
         </div>
