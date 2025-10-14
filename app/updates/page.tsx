@@ -1,3 +1,5 @@
+'use client';
+
 import { Metadata } from "next";
 import { notFound, useSearchParams } from "next/navigation";
 import Link from "next/link";
