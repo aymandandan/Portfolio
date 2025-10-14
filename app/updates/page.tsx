@@ -6,11 +6,12 @@ import { profileData } from "@/data/profile";
 
 const ITEMS_PER_PAGE = 3;
 
-interface SearchParams {
+type SearchParams = {
+  params: Record<string, never>;
   searchParams: {
     page?: string;
   };
-}
+};
 
 export const metadata: Metadata = {
   title: "Updates | My Portfolio",
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 export default async function UpdatesPage({ searchParams }: SearchParams) {
-  const {page} = await searchParams;
+  const { page } = await searchParams;
   const currentPage = Math.max(1, parseInt(page || "1", 10));
   const updates = profileData.updates || [];
   const totalPages = Math.ceil(updates.length / ITEMS_PER_PAGE);
