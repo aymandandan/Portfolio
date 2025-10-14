@@ -1,15 +1,10 @@
 import { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import UpdateCard from "@/components/updates/UpdateCard";
 import { profileData } from "@/data/profile";
-import { use } from "react";
 
 const ITEMS_PER_PAGE = 3;
-
-type SearchParams = {
-  searchParams: Promise<{ page?: string }>;
-};
 
 export const metadata: Metadata = {
   title: "Updates | My Portfolio",
@@ -17,8 +12,9 @@ export const metadata: Metadata = {
     "Stay updated with my latest work, thoughts, and experiences in web development.",
 };
 
-export default function UpdatesPage({ searchParams }: SearchParams) {
-  const { page } = use(searchParams);
+export default function UpdatesPage() {
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page") || "1";
   const currentPage = Math.max(1, parseInt(page || "1", 10));
   const updates = profileData.updates || [];
   const totalPages = Math.ceil(updates.length / ITEMS_PER_PAGE);
