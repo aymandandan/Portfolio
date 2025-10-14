@@ -55,3 +55,5 @@ export const profileData: Profile = {
   skills: SkillsData,
   contact: ContactData,
 };
+
+export const dynamicPath = `${process.env.NODE_ENV === 'production' ? '/Portfolio' : ''}`;

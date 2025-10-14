@@ -1,16 +1,17 @@
 import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
-import { profileData } from "@/data/profile";
+import { profileData, dynamicPath } from "@/data/profile";
 
 export default function Home() {
   const { name, role, bio, avatar, contact } = profileData;
+  const avatarPath = `${dynamicPath}${avatar}`;
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Hero Section */}
-      <section 
-        id="home" 
+      <section
+        id="home"
         className="py-16 md:py-24 lg:py-32"
         aria-labelledby="hero-heading"
       >
@@ -20,8 +21,8 @@ export default function Home() {
               <p className="text-lg md:text-xl text-primary-500 mb-2">
                 Hi, I&apos;m
               </p>
-              <h1 
-                id="hero-heading" 
+              <h1
+                id="hero-heading"
                 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
               >
                 {name}
@@ -44,7 +45,7 @@ export default function Home() {
             <div className="lg:w-1/2 flex justify-center mt-12 lg:mt-0">
               <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary-500 shadow-lg">
                 <Image
-                  src={avatar}
+                  src={avatarPath}
                   alt={name}
                   fill
                   className="object-cover"
@@ -53,7 +54,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          
+
           {/* Social Links */}
           <div className="flex justify-center lg:justify-start mt-12 gap-6">
             {contact.socialLinks?.map((social) => (
@@ -65,7 +66,7 @@ export default function Home() {
                 className="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors text-3xl"
                 aria-label={social.name}
               >
-                {social.name.toLowerCase() === 'github' ? (
+                {social.name.toLowerCase() === "github" ? (
                   <FaGithub aria-hidden="true" />
                 ) : (
                   <FaLinkedin aria-hidden="true" />

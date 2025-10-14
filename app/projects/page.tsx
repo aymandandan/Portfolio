@@ -10,7 +10,7 @@ import {
   FiLayers,
   FiSmartphone,
 } from "react-icons/fi";
-import { profileData } from "@/data/profile";
+import { dynamicPath, profileData } from "@/data/profile";
 
 type FilterType = "all" | "web" | "design" | "mobile";
 
@@ -104,7 +104,7 @@ export default function ProjectsPage() {
                   <span className="text-gray-400 dark:text-gray-600 text-sm">
                     {project.image ? (
                       <Image
-                        src={project.image}
+                        src={`${dynamicPath}${project.image}`}
                         alt={project.title}
                         fill
                         className="object-cover"

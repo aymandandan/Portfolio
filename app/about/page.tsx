@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { profileData } from '@/data/profile';
+import { dynamicPath, profileData } from '@/data/profile';
 
 export default function AboutPage() {
   const { name, role, about, skills, email, avatar, availability, contact } = profileData;
@@ -10,7 +10,7 @@ export default function AboutPage() {
       <section className="relative py-32 text-white overflow-hidden">
         <div className="absolute inset-0">
           <Image
-            src="/images/Banner.jpg"
+            src={`${dynamicPath}/images/Banner.jpg`}
             alt="Banner background"
             fill
             className="object-cover"
@@ -31,7 +31,7 @@ export default function AboutPage() {
             <div className="md:w-1/3">
               <div className="relative rounded-2xl overflow-hidden shadow-xl">
                 <Image
-                  src={avatar}
+                  src={`${dynamicPath}${avatar}`}
                   alt={name}
                   width={400}
                   height={500}
