@@ -1,18 +1,11 @@
 'use client';
 
-import { Metadata } from "next";
 import { notFound, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import UpdateCard from "@/components/updates/UpdateCard";
 import { profileData } from "@/data/profile";
 
 const ITEMS_PER_PAGE = 3;
-
-export const metadata: Metadata = {
-  title: "Updates | My Portfolio",
-  description:
-    "Stay updated with my latest work, thoughts, and experiences in web development.",
-};
 
 export default function UpdatesPage() {
   const searchParams = useSearchParams();
