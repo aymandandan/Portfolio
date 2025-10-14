@@ -7,10 +7,7 @@ import { profileData } from "@/data/profile";
 const ITEMS_PER_PAGE = 3;
 
 type SearchParams = {
-  params: Record<string, never>;
-  searchParams: {
-    page?: string;
-  };
+  searchParams: Promise<{ page?: string }>;
 };
 
 export const metadata: Metadata = {
