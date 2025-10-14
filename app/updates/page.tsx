@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import UpdateCard from "@/components/updates/UpdateCard";
 import { profileData } from "@/data/profile";
+import { use } from "react";
 
 const ITEMS_PER_PAGE = 3;
 
@@ -16,8 +17,8 @@ export const metadata: Metadata = {
     "Stay updated with my latest work, thoughts, and experiences in web development.",
 };
 
-export default async function UpdatesPage({ searchParams }: SearchParams) {
-  const { page } = await searchParams;
+export default function UpdatesPage({ searchParams }: SearchParams) {
+  const { page } = use(searchParams);
   const currentPage = Math.max(1, parseInt(page || "1", 10));
   const updates = profileData.updates || [];
   const totalPages = Math.ceil(updates.length / ITEMS_PER_PAGE);
