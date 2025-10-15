@@ -12,6 +12,7 @@ interface Profile {
   title: string;
   description: string;
   role: string;
+  short: string;
   bio: string;
   email: string;
   avatar: string;
@@ -36,6 +37,8 @@ export const profileData: Profile = {
   title: "Software Engineer",
   description: "Ayman Dandan | Software Engineer",
   role: "Software Engineer & Web Developer",
+  short:
+    "Software Engineer & Web Developer passionate about creating beautiful, functional, and user-centered digital experiences.",
   bio: "I build exceptional digital experiences with clean, efficient code and thoughtful design.",
   email: "ayman@example.com",
   avatar: "/images/Profile.jpg",
@@ -56,4 +59,6 @@ export const profileData: Profile = {
   contact: ContactData,
 };
 
-export const dynamicPath = `${process.env.NODE_ENV === 'production' ? '/Portfolio' : ''}`;
+export const dynamicPath = `${
+  process.env.NODE_ENV === "production" ? "/Portfolio" : ""
+}`;
