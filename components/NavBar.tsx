@@ -4,7 +4,12 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  SunIcon,
+  MoonIcon,
+} from "@heroicons/react/24/outline";
 import { profileData } from "@/data/profile";
 
 const navLinks = [
@@ -18,7 +23,27 @@ const navLinks = [
 export default function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
   const pathname = usePathname();
+
+  // Initialize dark mode from localStorage or system preference
+  useEffect(() => {
+    const savedTheme =
+      localStorage.getItem("theme") ||
+      (window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light");
+    setDarkMode(savedTheme === "dark");
+    document.documentElement.setAttribute("data-theme", savedTheme);
+  }, []);
+
+  // Toggle dark mode
+  const toggleDarkMode = () => {
+    const newTheme = darkMode ? "light" : "dark";
+    setDarkMode(!darkMode);
+    document.documentElement.setAttribute("data-theme", newTheme);
+    localStorage.setItem("theme", newTheme);
+  };
 
   // Handle scroll effect
   useEffect(() => {
@@ -70,23 +95,40 @@ export default function NavBar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-2">
             {navLinks.map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
                 className={`px-4 py-2 text-sm font-medium transition-colors rounded-md ${
-                  pathname === link.href
-                    ? "text-primary-500 bg-primary-50"
-                    : "text-gray-500 hover:text-primary-500 hover:bg-gray-100"
+                  pathname === link.href ||
+                  (pathname.startsWith(link.href) && link.href !== "/")
+                    ? "text-primary-600 bg-primary-50 dark:bg-gray-800"
+                    : "text-gray-500 hover:text-primary-500 hover:bg-gray-100 dark:hover:bg-gray-800"
                 }`}
               >
                 {link.name}
               </Link>
             ))}
+
+            {/* Dark Mode Toggle */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-full text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              aria-label={
+                darkMode ? "Switch to light mode" : "Switch to dark mode"
+              }
+            >
+              {darkMode ? (
+                <SunIcon className="h-5 w-5" />
+              ) : (
+                <MoonIcon className="h-5 w-5" />
+              )}
+            </button>
+
             <Link
               href="/contact"
-              className="ml-4 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-secondary-600 rounded-md hover:from-primary-700 hover:to-secondary-700 transition-colors"
+              className="ml-2 px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-primary-600 to-secondary-600 rounded-md hover:from-primary-700 hover:to-secondary-700 transition-colors"
             >
               Contact Me
             </Link>
@@ -119,7 +161,7 @@ export default function NavBar() {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: "100%" }}
             transition={{ type: "tween", ease: "easeInOut" }}
-            className="fixed inset-0 h-screen w-full bg-white/80 z-40 md:hidden"
+            className="fixed inset-0 h-screen w-full bg-background/85 z-40 md:hidden"
           >
             <div className="flex flex-col h-full p-6 space-y-4 pt-20">
               <div className="mb-8">
@@ -132,28 +174,43 @@ export default function NavBar() {
                 </Link>
               </div>
 
-              <nav className="flex-1 space-y-2">
+              <div className="flex flex-col space-y-4 px-4 py-6">
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
                     href={link.href}
                     className={`block px-4 py-3 text-lg font-medium rounded-lg transition-colors ${
-                      pathname === link.href
+                      pathname === link.href ||
+                      (pathname.startsWith(link.href) && link.href !== "/")
                         ? "text-primary-600 bg-primary-50"
-                        : "text-gray-700 hover:bg-gray-50"
+                        : "text-gray-700 hover:bg-gray-300 dark:hover:bg-gray-100"
                     }`}
-                    onClick={() => setIsOpen(false)}
                   >
                     {link.name}
                   </Link>
                 ))}
-              </nav>
 
-              <div className="pt-4 border-t border-gray-100">
+                {/* Mobile Dark Mode Toggle */}
+                <button
+                  onClick={toggleDarkMode}
+                  className="flex items-center space-x-2 px-4 py-2 text-lg font-medium text-gray-700 hover:bg-gray-300 dark:hover:bg-gray-100 rounded-md transition-colors"
+                >
+                  {darkMode ? (
+                    <>
+                      <SunIcon className="h-5 w-5" />
+                      <span>Light Mode</span>
+                    </>
+                  ) : (
+                    <>
+                      <MoonIcon className="h-5 w-5" />
+                      <span>Dark Mode</span>
+                    </>
+                  )}
+                </button>
+
                 <Link
                   href="/contact"
-                  className="block w-full text-center px-6 py-3 text-base font-medium text-white bg-gradient-to-r from-primary-600 to-secondary-600 rounded-lg hover:from-primary-700 hover:to-secondary-700 transition-colors"
-                  onClick={() => setIsOpen(false)}
+                  className="w-full px-4 py-2 text-lg font-medium text-center text-white bg-gradient-to-r from-primary-600 to-secondary-600 rounded-md hover:from-primary-700 hover:to-secondary-700 transition-colors"
                 >
                   Contact Me
                 </Link>
