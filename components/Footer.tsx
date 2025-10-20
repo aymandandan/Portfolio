@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaTwitter, FaInstagram } from "react-icons/fa";
 import { profileData } from "@/data/profile";
 
 export default function Footer() {
@@ -16,27 +16,50 @@ export default function Footer() {
             </h3>
             <p className="text-gray-400 mb-4">{profileData.short}</p>
             <div className="flex space-x-4">
-              {profileData.contact.socialLinks?.map((social) => (
+              {profileData.contact.socialLinks.github && (
                 <a
-                  key={social.name}
-                  href={social.url}
+                  href={profileData.contact.socialLinks.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-primary-100 transition-colors duration-300"
-                  aria-label={social.name}
+                  aria-label="GitHub"
                 >
-                  {social.icon === "github" && <FaGithub className="h-5 w-5" />}
-                  {social.icon === "linkedin" && (
-                    <FaLinkedin className="h-5 w-5" />
-                  )}
-                  {social.icon === "twitter" && (
-                    <FaTwitter className="h-5 w-5" />
-                  )}
-                  {social.icon === "email" && (
-                    <FaEnvelope className="h-5 w-5" />
-                  )}
+                  <FaGithub className="h-5 w-5" />
                 </a>
-              ))}
+              )}
+              {profileData.contact.socialLinks.linkedin && (
+                <a
+                  href={profileData.contact.socialLinks.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-primary-100 transition-colors duration-300"
+                  aria-label="LinkedIn"
+                >
+                  <FaLinkedin className="h-5 w-5" />
+                </a>
+              )}
+              {profileData.contact.socialLinks.twitter && (
+                <a
+                  href={profileData.contact.socialLinks.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-primary-100 transition-colors duration-300"
+                  aria-label="Twitter"
+                >
+                  <FaTwitter className="h-5 w-5" />
+                </a>
+              )}
+              {profileData.contact.socialLinks.instagram && (
+                <a
+                  href={profileData.contact.socialLinks.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-primary-100 transition-colors duration-300"
+                  aria-label="Instagram"
+                >
+                  <FaInstagram className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
 
