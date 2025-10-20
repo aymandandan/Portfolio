@@ -3,6 +3,8 @@ import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { profileData, dynamicPath } from "@/data/profile";
 import { ServicesSection } from "@/components/home/ServicesSection";
+import { CallToAction } from "@/components/home/CallToAction";
+import { Testimonials } from "@/components/home/Testimonials";
 
 export default function Home() {
   const { name, role, bio, avatar, contact } = profileData;
@@ -87,6 +89,12 @@ export default function Home() {
 
       {/* Services Section */}
       <ServicesSection />
+
+      {/* Call to Action */}
+      <CallToAction />
+
+      {/* Testimonials Section */}
+      <Testimonials />
     </div>
   );
 }
