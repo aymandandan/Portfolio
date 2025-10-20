@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   EnvelopeIcon,
   PhoneIcon,
@@ -9,12 +10,25 @@ import {
 import { profileData } from "@/data/profile";
 
 export default function ContactPage() {
+  const searchParams = useSearchParams();
+  const service = searchParams.get("service");
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    subject: "",
-    message: "",
+    subject: service ? `Service Inquiry: ${service}` : "",
+    message: service ? `I'm interested in your ${service} service.` : "",
   });
+
+  useEffect(() => {
+    if (service) {
+      setFormData((prev) => ({
+        ...prev,
+        subject: `Service Inquiry: ${service}`,
+        message: `I'm interested in your ${service} service.`,
+      }));
+    }
+  }, [service]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -28,7 +42,6 @@ export default function ContactPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log("Form submitted:", formData);
     // Add your form submission logic here
   };

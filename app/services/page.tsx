@@ -9,9 +9,9 @@ import {
   FaWrench,
 } from "react-icons/fa";
 import { profileData } from "@/data/profile";
-import Link from "next/link";
 import { AnimatedServiceCard } from "@/components/services/AnimatedServiceCard";
 import { ServicesHero } from "@/components/services/ServicesHero";
+import { Button } from "@/components/ui/button";
 
 const iconMap = {
   code: <FaCode className="w-8 h-8" />,
@@ -79,14 +79,15 @@ export default function ServicesPage() {
                       </li>
                     ))}
                   </ul>
-                  <Link
+                  <Button
                     href={`/contact?service=${encodeURIComponent(
                       service.title
                     )}`}
-                    className="mt-auto inline-flex items-center justify-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 transition-colors duration-300"
+                    variant="primary"
+                    className="w-full mt-4"
                   >
                     Get Started
-                  </Link>
+                  </Button>
                 </div>
               </AnimatedServiceCard>
             ))}
