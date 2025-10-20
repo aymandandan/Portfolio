@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FaGithub, FaLinkedin } from "react-icons/fa6";
 import { Button } from "@/components/ui/button";
 import { profileData, dynamicPath } from "@/data/profile";
+import { ServicesSection } from "@/components/home/ServicesSection";
 
 export default function Home() {
   const { name, role, bio, avatar, contact } = profileData;
@@ -41,41 +42,51 @@ export default function Home() {
                   Get In Touch
                 </Button>
               </div>
+              <div className="mt-8 flex justify-center lg:justify-start space-x-6">
+                {contact.socialLinks.github && (
+                  <a
+                    href={contact.socialLinks.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-400 transition-colors"
+                    aria-label="GitHub"
+                  >
+                    <FaGithub className="w-6 h-6" />
+                  </a>
+                )}
+                {contact.socialLinks.linkedin && (
+                  <a
+                    href={contact.socialLinks.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-700 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-400 transition-colors"
+                    aria-label="LinkedIn"
+                  >
+                    <FaLinkedin className="w-6 h-6" />
+                  </a>
+                )}
+              </div>
             </div>
-            <div className="lg:w-1/2 flex justify-center mt-12 lg:mt-0">
-              <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-primary-500 shadow-lg">
-                <Image
-                  src={avatarPath}
-                  alt={name}
-                  fill
-                  className="object-cover"
-                  priority
-                />
+            <div className="lg:w-1/2 flex justify-center">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+                <div className="w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-gray-800 shadow-xl">
+                  <Image
+                    src={avatarPath}
+                    alt={name}
+                    width={400}
+                    height={400}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
-
-          {/* Social Links */}
-          <div className="flex justify-center lg:justify-start mt-12 gap-6">
-            {contact.socialLinks?.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-gray-700 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors text-3xl"
-                aria-label={social.name}
-              >
-                {social.name.toLowerCase() === "github" ? (
-                  <FaGithub aria-hidden="true" />
-                ) : (
-                  <FaLinkedin aria-hidden="true" />
-                )}
-              </a>
-            ))}
-          </div>
         </div>
       </section>
+
+      {/* Services Section */}
+      <ServicesSection />
     </div>
   );
 }
