@@ -5,6 +5,7 @@ import { profileData, dynamicPath } from "@/data/profile";
 import { ServicesSection } from "@/components/home/ServicesSection";
 import { CallToAction } from "@/components/home/CallToAction";
 import { Testimonials } from "@/components/home/Testimonials";
+import { FeaturedProjects } from "@/components/home/FeaturedProjects";
 
 export default function Home() {
   const { name, role, bio, avatar, contact } = profileData;
@@ -90,11 +91,14 @@ export default function Home() {
       {/* Services Section */}
       <ServicesSection />
 
+      {/* Featured Projects */}
+      <FeaturedProjects />
+
+      {/* Testimonials */}
+      <Testimonials />
+
       {/* Call to Action */}
       <CallToAction />
-
-      {/* Testimonials Section */}
-      <Testimonials />
     </div>
   );
 }
