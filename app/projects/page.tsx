@@ -8,7 +8,7 @@ import {
   FiSmartphone,
 } from "react-icons/fi";
 import { profileData } from "@/data/profile";
-import ProjectsCard from "@/components/ProjectsCard";
+import ProjectsCard from "@/components/projects/ProjectsCard";
 import Pagination from "@/components/Pagination";
 
 // Number of items per page

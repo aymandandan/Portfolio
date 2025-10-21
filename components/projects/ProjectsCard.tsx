@@ -2,6 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FiGithub, FiExternalLink } from "react-icons/fi";
 import { Project } from "@/data/projects";
+import { dynamicPath } from "@/data/profile";
 
 interface ProjectsCardProps {
   project: Project;
@@ -14,21 +15,33 @@ export default function ProjectsCard({ project }: ProjectsCardProps) {
       whileHover={{ y: -5 }}
     >
       <div className="h-48 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-        <div className="w-full h-full bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 flex items-center justify-center">
-          <span className="text-gray-400 dark:text-gray-600 text-sm">
-            {project.image ? (
-              <Image
-                src={project.image.startsWith('http') ? project.image : `/Portfolio${project.image}`}
-                alt={project.title}
-                width={400}
-                height={300}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              "Project Image"
-            )}
-          </span>
-        </div>
+        {project.image ? (
+          <div className="w-full h-full">
+            <Image
+              src={project.image.startsWith('http') ? project.image : `${dynamicPath}${project.image}`}
+              alt={project.title
+                .split(' ')
+                .map(word => word[0])
+                .join('')
+                .toUpperCase()
+                .substring(0, 3)}
+              width={400}
+              height={300}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 flex items-center justify-center">
+            <span className="text-4xl font-bold text-primary-600 dark:text-primary-400">
+              {project.title
+                .split(' ')
+                .map(word => word[0])
+                .join('')
+                .toUpperCase()
+                .substring(0, 3)}
+            </span>
+          </div>
+        )}
       </div>
       <div className="p-6">
         <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
