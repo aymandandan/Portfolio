@@ -1,21 +1,24 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import {
-  FiGithub,
-  FiExternalLink,
   FiCode,
   FiLayers,
   FiSmartphone,
 } from "react-icons/fi";
-import { dynamicPath, profileData } from "@/data/profile";
+import { profileData } from "@/data/profile";
+import ProjectsCard from "@/components/ProjectsCard";
+import Pagination from "@/components/Pagination";
+
+// Number of items per page
+const ITEMS_PER_PAGE = 6;
 
 type FilterType = "all" | "web" | "design" | "mobile";
 
 export default function ProjectsPage() {
   const [activeFilter, setActiveFilter] = useState<FilterType>("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filters: { id: FilterType; label: string; icon: React.ReactNode }[] = [
     { id: "all", label: "All Projects", icon: <FiLayers className="mr-2" /> },
@@ -24,10 +27,29 @@ export default function ProjectsPage() {
     { id: "mobile", label: "Mobile", icon: <FiSmartphone className="mr-2" /> },
   ];
 
-  const filteredProjects =
-    activeFilter === "all"
-      ? profileData.projects
+  // Filter projects based on active filter
+  const filteredProjects = useMemo(() => {
+    const filtered = activeFilter === "all"
+      ? [...profileData.projects]
       : profileData.projects.filter((project) => project.category === activeFilter);
+    
+    // Reset to first page when filter changes
+    setCurrentPage(1);
+    return filtered;
+  }, [activeFilter]);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredProjects.length / ITEMS_PER_PAGE);
+  const paginatedProjects = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    return filteredProjects.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredProjects, currentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const container = {
     hidden: { opacity: 0 },
@@ -92,76 +114,20 @@ export default function ProjectsPage() {
           initial="hidden"
           animate="show"
         >
-          {filteredProjects.map((project) => (
-            <motion.article
-              key={project.title}
-              className="group relative bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300"
+          {paginatedProjects.map((project, index) => (
+            <motion.div
+              key={`${project.id}-${index}`}
               variants={item}
-              whileHover={{ y: -5 }}
             >
-              <div className="h-48 bg-gray-200 dark:bg-gray-700 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 flex items-center justify-center">
-                  <span className="text-gray-400 dark:text-gray-600 text-sm">
-                    {project.image ? (
-                      <Image
-                        src={`${dynamicPath}${project.image}`}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
-                    ) : (
-                      "Project Image"
-                    )}
-                  </span>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-                  {project.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-200"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
-                    aria-label="View on GitHub"
-                  >
-                    <FiGithub className="mr-1" /> Code
-                  </a>
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors"
-                    aria-label="View live demo"
-                  >
-                    Live Demo
-                    <FiExternalLink className="ml-1" />
-                  </a>
-                </div>
-              </div>
-            </motion.article>
+              <ProjectsCard project={project} />
+            </motion.div>
           ))}
         </motion.div>
 
-        {filteredProjects.length === 0 && (
+        {/* No projects message */}
+        {filteredProjects.length === 0 ? (
           <motion.div
-            className="text-center py-12"
+            className="text-center py-12 col-span-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -170,6 +136,22 @@ export default function ProjectsPage() {
               No projects found in this category. Check back soon for updates!
             </p>
           </motion.div>
+        ) : (
+          /* Pagination */
+          filteredProjects.length > ITEMS_PER_PAGE && (
+            <motion.div 
+              className="mt-12 col-span-full"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </motion.div>
+          )
         )}
       </div>
     </main>

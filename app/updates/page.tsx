@@ -1,14 +1,17 @@
 'use client';
 
 import { Suspense } from 'react';
-import { useSearchParams, notFound } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import UpdateCard from "@/components/updates/UpdateCard";
 import { profileData } from "@/data/profile";
+import Pagination from "@/components/Pagination";
 
 const ITEMS_PER_PAGE = 3;
 
 function UpdatesContent() {
+  const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
   const currentPage = Math.max(1, parseInt(page || "1", 10));
@@ -16,14 +19,29 @@ function UpdatesContent() {
   const totalPages = Math.ceil(updates.length / ITEMS_PER_PAGE);
 
   if (currentPage > totalPages) {
-    notFound();
+    return (
+      <div className="text-center py-12">
+        <p className="text-gray-600 dark:text-gray-300">No updates found on this page.</p>
+        <Link 
+          href="/updates" 
+          className="mt-4 inline-block text-blue-600 dark:text-blue-400 hover:underline"
+        >
+          Go to first page
+        </Link>
+      </div>
+    );
   }
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedUpdates = updates.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE
-  );
+  const paginatedUpdates = updates.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+
+  const handlePageChange = (page: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('page', page.toString());
+    router.push(`${pathname}?${params.toString()}`);
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="space-y-8">
@@ -32,26 +50,12 @@ function UpdatesContent() {
       ))}
       
       {totalPages > 1 && (
-        <div className="mt-12 flex flex-col sm:flex-row justify-between items-center gap-4">
-          {currentPage > 1 && (
-            <Link
-              href={`/updates?page=${currentPage - 1}`}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-            >
-              Previous
-            </Link>
-          )}
-          <span className="text-gray-600 dark:text-gray-300">
-            Page {currentPage} of {totalPages}
-          </span>
-          {currentPage < totalPages && (
-            <Link
-              href={`/updates?page=${currentPage + 1}`}
-              className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
-            >
-              Next
-            </Link>
-          )}
+        <div className="mt-12">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       )}
     </div>
