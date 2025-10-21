@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   EnvelopeIcon,
@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { profileData } from "@/data/profile";
 
-export default function ContactPage() {
+function ContactContent() {
   const searchParams = useSearchParams();
   const service = searchParams.get("service");
 
@@ -229,5 +229,17 @@ export default function ContactPage() {
         </div>
       </section>
     </main>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-pulse">Loading contact information...</div>
+      </div>
+    }>
+      <ContactContent />
+    </Suspense>
   );
 }
